@@ -4,16 +4,16 @@ import datetime
 import psycopg2
 
 # dev
-config_db = "dbname=news user=postgres password=pass host=localhost"
+# config_db = "dbname=news user=postgres password=pass host=localhost"
 
 # vagrant
-# config_db = "dbname=news"
+config_db = "dbname=news"
 
 
 def database_connect(database_name):
     """Connect to the database.  Returns a database connection."""
     try:
-        db = psycopg2.connect(dbname=database_name)
+        db = psycopg2.connect(database_name)
         return db
 
     except psycopg2.Error as e:
@@ -24,7 +24,7 @@ def database_connect(database_name):
 
 
 def get_top_articles():
-    db = psycopg2.connect(config_db)
+    db = database_connect(config_db)
     c = db.cursor()
     query = """\
           select
@@ -44,7 +44,7 @@ def get_top_articles():
 
 
 def get_top_authors():
-    db = psycopg2.connect(config_db)
+    db = database_connect(config_db)
     c = db.cursor()
     query = """\
           select
@@ -64,7 +64,7 @@ def get_top_authors():
 
 
 def get_top_errors():
-    db = psycopg2.connect(config_db)
+    db = database_connect(config_db)
     c = db.cursor()
     query = """\
           select
